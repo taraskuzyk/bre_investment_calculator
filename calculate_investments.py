@@ -26,7 +26,7 @@ def fmt_amount(amount: int) -> str:
     for power, postfix in power_vs_postfix.items():
         threshold = 10**power
         if amount >= threshold:
-            return f"{round(amount / threshold, 3)}{postfix}"
+            return f"{round(amount / threshold, 1)}{postfix}"
     return str(amount)
 
 
@@ -60,11 +60,9 @@ class Bank:
             investment.accrue()
 
 
-PROFIT_PER_TURN = 500_000
-
+PROFIT_PER_TURN = 5_000_000
 ASSUMED_PROFIT_PER_TURN_GROWTH = 0.05
-
-NUMBER_OF_DAYS = 30
+NUMBER_OF_DAYS = 60
 PER_TURN_INVESTMENT_PORTION = 0.5
 REINVESTMENT_PORTION = 0.7
 
@@ -93,8 +91,8 @@ if __name__ == "__main__":
             f"""\
 ### DAY {day_index} ###
 Profit from investments: {fmt_amount(investment_profit)}
-reinvestment: {fmt_amount(reinvestment)}
-principal invested: {fmt_amount(total_invested)}
-total returns: {fmt_amount(total_returns)}
+reinvestment:            {fmt_amount(reinvestment)}
+principal invested:      {fmt_amount(total_invested)}
+total returns:           {fmt_amount(total_returns)}
 """
         )
