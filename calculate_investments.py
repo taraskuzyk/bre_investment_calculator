@@ -64,15 +64,15 @@ PROFIT_PER_TURN = 500_000
 
 ASSUMED_PROFIT_PER_TURN_GROWTH = 0.05
 
-NUMBER_OF_DAYS = 20
-PER_TURN_INVESTMENT_PORTION = 0.3
-REINVESTMENT_PORTION = 0.8
+NUMBER_OF_DAYS = 30
+PER_TURN_INVESTMENT_PORTION = 0.5
+REINVESTMENT_PORTION = 0.7
 
 
 if __name__ == "__main__":
-    cash: int = 0
-    profit_from_investments: int = 0
     bank = Bank()
+    total_invested: int = 0
+    total_returns: int = 0
     for day_index in range(NUMBER_OF_DAYS):
         PROFIT_PER_TURN += PROFIT_PER_TURN * ASSUMED_PROFIT_PER_TURN_GROWTH
         daily_returns = bank.withdraw_daily()
@@ -80,9 +80,12 @@ if __name__ == "__main__":
         reinvestment = int(daily_returns * REINVESTMENT_PORTION)
         bank.add_investment(reinvestment)
         investment_profit = daily_returns - reinvestment
+        total_returns += investment_profit
 
         for _ in range(TURNS_PER_DAY):
-            bank.add_investment(PROFIT_PER_TURN * PER_TURN_INVESTMENT_PORTION)
+            cash_to_invest = int(PROFIT_PER_TURN * PER_TURN_INVESTMENT_PORTION)
+            total_invested += cash_to_invest
+            bank.add_investment(cash_to_invest)
 
         if day_index == 0:
             continue
@@ -91,5 +94,7 @@ if __name__ == "__main__":
 ### DAY {day_index} ###
 Profit from investments: {fmt_amount(investment_profit)}
 reinvestment: {fmt_amount(reinvestment)}
+principal invested: {fmt_amount(total_invested)}
+total returns: {fmt_amount(total_returns)}
 """
         )
