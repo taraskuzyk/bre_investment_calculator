@@ -60,9 +60,12 @@ class Bank:
             investment.accrue()
 
 
-PROFIT_PER_TURN = 2_000_000
+PROFIT_PER_TURN = 500_000
+
+ASSUMED_PROFIT_PER_TURN_GROWTH = 0.05
+
 NUMBER_OF_DAYS = 20
-PER_TURN_INVESTMENT_PORTION = 0.5
+PER_TURN_INVESTMENT_PORTION = 0.3
 REINVESTMENT_PORTION = 0.8
 
 
@@ -71,6 +74,7 @@ if __name__ == "__main__":
     profit_from_investments: int = 0
     bank = Bank()
     for day_index in range(NUMBER_OF_DAYS):
+        PROFIT_PER_TURN += PROFIT_PER_TURN * ASSUMED_PROFIT_PER_TURN_GROWTH
         daily_returns = bank.withdraw_daily()
 
         reinvestment = int(daily_returns * REINVESTMENT_PORTION)
